@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Colgante Luna Plateada",
+    "description": "Colgante de plata en forma de luna con detalles brillantes.",
+    "price": 19990,
+    "stock": 15,
+    "imgUrl": "https://example.com/img/colgante-luna.jpg",
+    "category": "colgantes"
+  },
+  {
+    "name": "Colgante Corazón Dorado",
+    "description": "Colgante en forma de corazón bañado en oro de 18k.",
+    "price": 24990,
+    "stock": 10,
+    "imgUrl": "https://example.com/img/colgante-corazon.jpg",
+    "category": "colgantes"
+  },
+  {
+    "name": "Anillo Minimalista Plata",
+    "description": "Anillo de plata 925 de diseño minimalista.",
+    "price": 15990,
+    "stock": 20,
+    "imgUrl": "https://example.com/img/anillo-minimalista.jpg",
+    "category": "anillos"
+  },
+  {
+    "name": "Anillo con Piedra Azul",
+    "description": "Anillo ajustable con piedra semipreciosa azul.",
+    "price": 18990,
+    "stock": 12,
+    "imgUrl": "https://example.com/img/anillo-piedra-azul.jpg",
+    "category": "anillos"
+  },
+  {
+    "name": "Aros Perla Clásicos",
+    "description": "Aros pequeños con perlas naturales blancas.",
+    "price": 13990,
+    "stock": 25,
+    "imgUrl": "https://example.com/img/aros-perla.jpg",
+    "category": "aros"
+  },
+  {
+    "name": "Aros Aro Dorados",
+    "description": "Aros circulares medianos bañados en oro.",
+    "price": 16990,
+    "stock": 18,
+    "imgUrl": "https://example.com/img/aros-dorados.jpg",
+    "category": "aros"
+  },
+  {
+    "name": "Pulsera de Cuero Negra",
+    "description": "Pulsera trenzada de cuero genuino con broche metálico.",
+    "price": 12990,
+    "stock": 30,
+    "imgUrl": "https://example.com/img/pulsera-cuero.jpg",
+    "category": "pulseras"
+  },
+  {
+    "name": "Pulsera de Plata Ajustable",
+    "description": "Pulsera de plata ajustable con detalles finos.",
+    "price": 17990,
+    "stock": 14,
+    "imgUrl": "https://example.com/img/pulsera-plata.jpg",
+    "category": "pulseras"
+  },
+  {
+    "name": "Cadena Fina Dorada",
+    "description": "Cadena fina bañada en oro de 18k, estilo clásico.",
+    "price": 22990,
+    "stock": 16,
+    "imgUrl": "https://example.com/img/cadena-dorada.jpg",
+    "category": "cadenas"
+  },
+  {
+    "name": "Cadena Gruesa Acero",
+    "description": "Cadena robusta de acero inoxidable.",
+    "price": 19990,
+    "stock": 22,
+    "imgUrl": "https://example.com/img/cadena-acero.jpg",
+    "category": "cadenas"
+  }
+]
