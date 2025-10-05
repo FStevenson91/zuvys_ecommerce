@@ -2,6 +2,7 @@ import { PickType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEmpty,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -101,6 +102,9 @@ export class CreateUserDto {
   @MinLength(5)
   @MaxLength(20)
   city: string | undefined;
+
+  @IsEmpty()
+  isAdmin: boolean;
 }
 
 export class LoginDto extends PickType(CreateUserDto, ['email', 'password']) {

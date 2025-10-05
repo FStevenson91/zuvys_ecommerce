@@ -26,19 +26,24 @@ export class UsersService {
 
     return users;
   }
-  findAll() {
-    return `This action returns all users`;
-  }
+  async findById(id: string): Promise<any> {
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: {
+        order: {
+          orderDetails: {
+            products: true,
+          },
+        },
+      },
+    });
+    if (!user) {
+      throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    // Eliminar isAdmin de la respuesta usando destructuring
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { isAdmin, ...rest } = user;
+    return rest;
   }
 }
