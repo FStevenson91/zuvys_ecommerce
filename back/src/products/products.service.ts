@@ -7,9 +7,10 @@ import {
 // import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Categories } from 'src/categories/entities/category.entity';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Products } from './entities/product.entity';
 import * as data from '../../src/products/data/products.json';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -20,7 +21,7 @@ export class ProductsService {
     private readonly categoriesRepository: Repository<Categories>,
   ) {}
 
-  async create(): Promise<string> {
+  async productSeed(): Promise<string> {
     const categories: Categories[] = await this.categoriesRepository.find();
 
     if (categories.length === 0) {
@@ -72,19 +73,43 @@ export class ProductsService {
     return 'Products Added';
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async getProductById(id: string): Promise<Products> {
+    const product = await this.productsRepository.findOne({
+      where: { id },
+      relations: ['category'],
+    });
+    if (!product) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+    return product;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async getProducts(page?: number, limit?: number): Promise<Products[]> {
+    const products = await this.productsRepository.find({
+      where: { stock: MoreThan(0) },
+      relations: ['category'],
+    });
+
+    if (page !== undefined && limit !== undefined) {
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      return products.slice(startIndex, endIndex);
+    }
+
+    return products;
   }
 
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
+  async createProduct(productDto: CreateProductDto): Promise<Products> {
+    const category = await this.categoriesRepository.findOneBy({
+      id: productDto.categoryId,
+    });
+    if (!category) throw new NotFoundException('Categoría no encontrada');
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+    const newProduct = this.productsRepository.create({
+      ...productDto,
+      category,
+    });
+
+    return this.productsRepository.save(newProduct);
   }
 }

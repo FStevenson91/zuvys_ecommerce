@@ -10,6 +10,8 @@ import typeorm from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -22,8 +24,14 @@ import { OrdersModule } from './orders/orders.module';
       inject: [ConfigService], // configservice, va a tener todos los modulos que yo haya creado de configuracion, en este caso el de typeorm.
       useFactory: (config: ConfigService) => config.get('typeorm')!,
     }),
+    JwtModule.register({
+      global: true,
+      signOptions: { expiresIn: '60m' },
+      secret: process.env.JWT_SECRET,
+    }),
     CategoriesModule,
     OrdersModule,
+    FileUploadModule,
     // aca es for Root Async porque la configuracion de TypeORM depende de la carga de las variables de entorno, y esto puede demorar un poco, entonces lo hago de forma asincronica.
   ],
   controllers: [AppController],

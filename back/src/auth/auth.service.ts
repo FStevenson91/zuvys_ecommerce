@@ -30,7 +30,11 @@ export class AuthService {
       findUser.password,
     );
     if (!passwordMatch)
-      throw new BadRequestException('Credenciales incorrectas');
+      throw new BadRequestException('Credenciales incorrectas'); // no especifico si es el email o la contraseña para no dar pistas a un posible atacante
+
+    // Generar el JWT
+    // payload es la informacion que quiero guardar dentro del token, en este caso el id y el email del usuario, y si es admin o no.
+    // roles lo voy a usar para el guard de roles, que voy a crear mas adelante.
 
     const payload = {
       id: findUser.id,
@@ -57,6 +61,7 @@ export class AuthService {
         ...user,
         password: hashedPassword,
       });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = newUser;
       return {
         data: userWithoutPassword,

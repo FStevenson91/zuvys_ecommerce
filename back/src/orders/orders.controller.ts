@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Get,
+  ParseUUIDPipe,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/roles';
 
 @Controller('orders')
+@ApiBearerAuth('access-token')
+@Roles(Role.Admin, Role.User)
+@UseGuards(AuthGuard, RolesGuard)
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.ordersService.findAll();
+  create(@Req() req: any, @Body() createOrderDto: CreateOrderDto) {
+    const userId = req.user.id;
+    return this.ordersService.create(userId, createOrderDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+  @Roles(Role.Admin)
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.ordersService.getOrder(id);
   }
 }

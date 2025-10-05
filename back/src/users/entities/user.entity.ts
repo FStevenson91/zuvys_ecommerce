@@ -31,7 +31,7 @@ export class Users {
   password: string;
 
   @Column({
-    type: 'bigint', //phone debe ser bigint porque al momento de la conversion a number, puede superar el limite de un entero normal.
+    type: 'bigint', //phone debe ser bigint porque al momento de la conversion a number, puede superar el limite de un entero normal, pero generalmente se guarda como string en la base de datos, esto es mas util ya que al usarse como string no hay problema con los ceros a la izquierda o el largo del numero
   })
   phone: number;
 
